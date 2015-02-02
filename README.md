@@ -1,4 +1,4 @@
-# Phantio
+#PhantIO - a ruby library for phant.io
 
 TODO: Write a gem description
 
@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+	options = { :public_key => ..., :private_key }
 
 ## Contributing
 
