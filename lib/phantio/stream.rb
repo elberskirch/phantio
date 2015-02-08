@@ -2,11 +2,11 @@ require "cgi"
 
 module PhantIO
 	class Stream
-		def initialize(public_key, options = {})
-			@public_key = public_key
+		def initialize(options = {})
+			@public_key = options["public_key"] || nil
 			@private_key = options["private_key"] || nil
 			@delete_key = options["delete_key"] || nil
-			@url = options["url"] || DEFAULT_SERVER
+			@url = options[:url] || DEFAULT_SERVER
 		end
 
 		def input(fields = {})
@@ -15,7 +15,14 @@ module PhantIO
 			resource = build_resource(:input)
 			params = fields
 			fields["private_key"] = @private_key
-			Http.request(@url, resource, params)
+			response = HTTP.request(@url, resource, params)
+			response.body
+		end
+
+		def create(options = {:title => "stream", :description => "My Stream", :fields => "temp1,temp2"})
+			resource = build_resource(:create)
+			response = HTTP.request(@url, resource, options, :post, {'Accept'=>'application/json'})
+			response.body
 		end
 
 		private
@@ -23,6 +30,8 @@ module PhantIO
 			case type
 			when :input
 				url = "/input/" + @public_key 
+			when :create
+				url = "/streams/"
 			end
 			url
 		end
