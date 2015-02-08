@@ -6,7 +6,7 @@ module PhantIO
 			@public_key = options["public_key"] || nil
 			@private_key = options["private_key"] || nil
 			@delete_key = options["delete_key"] || nil
-			@url = options[:url] || DEFAULT_SERVER
+			@url = options["url"] || DEFAULT_SERVER
 		end
 
 		def input(fields = {})
